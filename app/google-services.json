@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "505719730994",
+    "project_id": "socitastic",
+    "storage_bucket": "socitastic.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:505719730994:android:f41a8a6c1f845a0d1ddd2b",
+        "android_client_info": {
+          "package_name": "com.example.socitastic"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "505719730994-epcc7ou5ogads3bn3klnn5a2a9d7q1pn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCczVaD7bR9DhQJy_eFrAVUF6reoDMdQxs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "505719730994-epcc7ou5ogads3bn3klnn5a2a9d7q1pn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
