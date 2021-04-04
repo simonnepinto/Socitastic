@@ -1,10 +1,13 @@
 package com.example.socitastic.daos
 
 import com.example.socitastic.models.User
+import com.google.android.gms.tasks.Task
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import org.w3c.dom.Document
 
 /*We add data into the firebase, a collection gets added for every user*/
 class UserDao {
@@ -17,5 +20,9 @@ class UserDao {
                 usersCollection.document(user.uid).set(it)
             }
         }
+    }
+
+    fun getUserById(uId: String): Task<DocumentSnapshot>{
+        return usersCollection.document(uId).get()
     }
 }
