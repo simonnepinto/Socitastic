@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import com.example.socitastic.daos.UserDao
+import com.example.socitastic.models.User
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -48,6 +50,12 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart(){
+        super.onStart()
+        val currentUser = auth.currentUser
+        updateUI(currentUser)
+    }
+
     private fun signIn() {
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
@@ -63,15 +71,15 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>?) {
+    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
         try {
             // Google Sign In was successful, authenticate with Firebase
-            val account = completedTask?.getResult(ApiException::class.java)!!
+            val account = completedTask.getResult(ApiException::class.java)!!
             Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
             firebaseAuthWithGoogle(account.idToken!!)
         } catch (e: ApiException) {
             // Google Sign In failed, update UI appropriately
-            Log.w(TAG, "Google sign in failed", e)
+            Log.w(TAG, "signInResult:failed code=" + e.statusCode)
         }
     }
 
@@ -89,7 +97,12 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun updateUI(firebaseUser: FirebaseUser?) {
-        if(firebaseUser!=null){
+        if(firebaseUser!=null){   //if user is signed in
+
+            val user = User(firebaseUser.uid, firebaseUser.displayName, firebaseUser.photoUrl.toString())
+            val usersDao = UserDao()
+            usersDao.addUser(user)
+
             val mainActivityIntent = Intent(this, MainActivity::class.java)
             startActivity(mainActivityIntent)
             finish()
@@ -99,5 +112,4 @@ class SignInActivity : AppCompatActivity() {
             progressBar.visibility = View.GONE
         }
     }
-
 }
